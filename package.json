@@ -15,8 +15,8 @@
     "node": ">=0.8"
   },
   "dependencies": {
-    "serialport": "^1.4.5",
-    "chess.js": "^0.1.0"
+    "serialport": "^4.0.7",
+    "chess.js": "^0.10.2"
   },
   "repository": {
     "type": "git",
