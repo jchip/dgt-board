@@ -1,6 +1,8 @@
 dgtchess
 ========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/fnogatz/node-dgtchess.svg)](https://greenkeeper.io/)
+
 An event-driven node.js driver for the electronic [DGT](http://dgtprojects.com) chess board.
 
 Install via npm:
