@@ -25,6 +25,13 @@ async function createStockFishEngine() {
   return engine;
 }
 
+async function createAmyanEngine() {
+  const engine = new Engine(path.join(__dirname, "../Engines/Windows/amyan/amyan.exe"));
+  await engine.init();
+  await engine.isready();
+  return engine;
+}
+
 async function startChess() {
   const board = await connectDgtBoard();
   const game = new ChessGame({ board });
@@ -33,7 +40,7 @@ async function startChess() {
     if (color === "white") {
       return new UserPlayer({ color, game, board });
     } else if (color === "black") {
-      const engine = await createStockFishEngine();
+      const engine = await createAmyanEngine();
       return new EnginePlayer({ color, game, board, engine });
     }
   });
