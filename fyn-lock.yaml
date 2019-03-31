@@ -556,11 +556,11 @@ chardet:
   _: 'https://registry.npmjs.org/chardet/-/chardet-0.4.2.tgz'
 chess.js:
  _:
-  ^0.1.0: 0.1.0
- 0.1.0:
+  ../chess.js: 0.10.3-dev-fynlocal_h
+ 0.10.3-dev-fynlocal_h:
   top: 1
-  $: sha1-BwrxIVTNc0TguEecZJ9YZRHlJDk=
-  _: 'https://registry.npmjs.org/chess.js/-/chess.js-0.1.0.tgz'
+  $: local
+  _: ..\chess.js
 choices-separator:
  _:
   ^2.0.0: 2.0.0
