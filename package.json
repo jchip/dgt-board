@@ -20,6 +20,7 @@
     "test": "npm run standard"
   },
   "dependencies": {
+    "chalk": "^2.4.2",
     "chess.js": "../chess.js",
     "lodash": "^4.17.11",
     "node-uci": "^1.3.1",
