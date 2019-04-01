@@ -18,18 +18,24 @@ async function connectDgtBoard() {
   });
 }
 
-async function createStockFishEngine() {
-  const engine = new Engine(path.join(__dirname, "stockfish_10_x64_bmi2.exe"));
+async function createEngine(name, binaryPath) {
+  const engine = new Engine(binaryPath);
+  engine.name = name;
   await engine.init();
   await engine.isready();
   return engine;
 }
 
+async function createStockFishEngine() {
+  return await createEngine("stockfish", path.join(__dirname, "stockfish_10_x64_bmi2.exe"));
+}
+
 async function createAmyanEngine() {
-  const engine = new Engine(path.join(__dirname, "../Engines/Windows/amyan/amyan.exe"));
-  await engine.init();
-  await engine.isready();
-  return engine;
+  return await createEngine("amyan", path.join(__dirname, "../Engines/Windows/amyan/amyan.exe"));
+}
+
+async function createAcquaEngine() {
+  return await createEngine("acqua", path.join(__dirname, "../Engines/Windows/acqua/acqua.exe"));
 }
 
 async function startChess() {
@@ -40,7 +46,11 @@ async function startChess() {
     if (color === "white") {
       return new UserPlayer({ color, game, board });
     } else if (color === "black") {
-      const engine = await createAmyanEngine();
+      const engine = [
+        await createAmyanEngine(),
+        await createAcquaEngine(),
+        await createStockFishEngine()
+      ];
       return new EnginePlayer({ color, game, board, engine });
     }
   });
