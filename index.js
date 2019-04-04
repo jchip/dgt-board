@@ -27,15 +27,15 @@ async function createEngine(name, binaryPath) {
 }
 
 async function createStockFishEngine() {
-  return await createEngine("stockfish", path.join(__dirname, "stockfish_10_x64_bmi2.exe"));
+  return await createEngine("stockfish", path.resolve("stockfish_10_x64_bmi2.exe"));
 }
 
 async function createAmyanEngine() {
-  return await createEngine("amyan", path.join(__dirname, "../Engines/Windows/amyan/amyan.exe"));
+  return await createEngine("amyan", path.resolve("../Engines/Windows/amyan/amyan.exe"));
 }
 
 async function createAcquaEngine() {
-  return await createEngine("acqua", path.join(__dirname, "../Engines/Windows/acqua/acqua.exe"));
+  return await createEngine("acqua", path.resolve("../Engines/Windows/acqua/acqua.exe"));
 }
 
 async function startChess() {
@@ -46,14 +46,17 @@ async function startChess() {
     if (color === "white") {
       return new UserPlayer({ color, game, board });
     } else if (color === "black") {
-      const engine = [
-        await createAmyanEngine(),
-        await createAcquaEngine(),
-        await createStockFishEngine()
-      ];
+      const acqua = await createAcquaEngine();
+      const engine = [acqua, await createAmyanEngine(), acqua, await createStockFishEngine()];
       return new EnginePlayer({ color, game, board, engine });
     }
   });
+
+  return game;
 }
 
-startChess();
+module.exports = startChess;
+
+if (require.main === module) {
+  startChess();
+}
