@@ -38,8 +38,8 @@ async function createAcquaEngine() {
   return await createEngine("acqua", path.resolve("../Engines/Windows/acqua/acqua.exe"));
 }
 
-async function startChess() {
-  const board = await connectDgtBoard();
+async function startChess(board) {
+  board = board || (await connectDgtBoard());
   const game = new ChessGame({ board });
   game.newGame(async color => {
     console.log("initializing player", color);
@@ -55,7 +55,10 @@ async function startChess() {
   return game;
 }
 
-module.exports = startChess;
+module.exports = {
+  startChess,
+  connectDgtBoard
+};
 
 if (require.main === module) {
   startChess();
