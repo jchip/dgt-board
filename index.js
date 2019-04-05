@@ -21,7 +21,12 @@ async function connectDgtBoard() {
 async function createEngine(name, binaryPath) {
   const engine = new Engine(binaryPath);
   engine.name = name;
+  return engine;
+}
+
+async function initEngine(engine) {
   await engine.init();
+  await engine.ucinewgame();
   await engine.isready();
   return engine;
 }
@@ -38,6 +43,17 @@ async function createAcquaEngine() {
   return await createEngine("acqua", path.resolve("../Engines/Windows/acqua/acqua.exe"));
 }
 
+// r1b1k2r/ppp3pp/2n5/5p1B/3Pp3/2P5/PP1Q2qP/R3K1NR b KQkq - 1 16
+
+async function createKomodoEngine() {
+  return await createEngine(
+    "komodo",
+    path.resolve("../Engines/Windows/komodo/komodo-9.02-64bit.exe")
+  );
+}
+
+let amyan, stockfish, acqua, komodo;
+
 async function startChess(board) {
   board = board || (await connectDgtBoard());
   const game = new ChessGame({ board });
@@ -46,8 +62,11 @@ async function startChess(board) {
     if (color === "white") {
       return new UserPlayer({ color, game, board });
     } else if (color === "black") {
-      const acqua = await createAcquaEngine();
-      const engine = [acqua, await createAmyanEngine(), acqua, await createStockFishEngine()];
+      amyan = await initEngine(amyan || (await createAmyanEngine()));
+      acqua = await initEngine(acqua || (await createAcquaEngine()));
+      stockfish = await initEngine(stockfish || (await createStockFishEngine()));
+      komodo = await initEngine(komodo || (await createKomodoEngine()));
+      const engine = [amyan, acqua, stockfish, komodo, acqua];
       return new EnginePlayer({ color, game, board, engine });
     }
   });
