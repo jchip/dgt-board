@@ -35,5 +35,10 @@
   },
   "bugs": {
     "url": "http://github.com/fnogatz/node-dgtchess/issues"
+  },
+  "fyn": {
+    "dependencies": {
+      "chess-js": "../chess-js"
+    }
   }
 }

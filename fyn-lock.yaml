@@ -563,13 +563,13 @@ chardet:
  0.4.2:
   $: sha1-tUc7M9yXxCTl2Y3IfVXU2KKci/I=
   _: 'https://registry.npmjs.org/chardet/-/chardet-0.4.2.tgz'
-chess.js:
+chess-js:
  _:
-  ../chess.js: 0.10.3-dev-fynlocal_h
- 0.10.3-dev-fynlocal_h:
+  ../chess-js: 0.10.3-fynlocal_h
+ 0.10.3-fynlocal_h:
   top: 1
   $: local
-  _: ..\chess.js
+  _: ..\chess-js
 choices-separator:
  _:
   ^2.0.0: 2.0.0
