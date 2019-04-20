@@ -66,7 +66,7 @@ class RandMinTimeEngine extends EnginePlayer {
   }
 
   get minTime() {
-    return Math.random() * 5000 + 500 + Math.random() * 3000;
+    return Math.random() * 1000 + 100 + Math.random() * 2000;
   }
 
   allowTakeback() {
