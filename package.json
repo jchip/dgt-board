@@ -1,6 +1,6 @@
 {
   "author": "Falco Nogatz <fnogatz@gmail.com>",
-  "name": "dgtchess",
+  "name": "dgt-board",
   "description": "Node.js driver for DGT electronic chess boards",
   "keywords": [
     "chess",
