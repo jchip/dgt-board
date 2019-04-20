@@ -59,6 +59,16 @@ async function createKomodoEngine() {
 
 let amyan, stockfish, acqua, komodo, irina;
 
+class RandMinTimeEngine extends EnginePlayer {
+  constructor(options) {
+    super(options);
+  }
+
+  get minTime() {
+    return Math.random() * 7000 + 500 + Math.random() * 3000;
+  }
+}
+
 async function startChess(game, board) {
   board = board || (await connectDgtBoard());
   game = game || new ChessGame({ board });
@@ -73,7 +83,12 @@ async function startChess(game, board) {
       // komodo = await initEngine(komodo || (await createKomodoEngine()));
       irina = await initEngine(irina || (await createIrinaEngine()));
       const engine = [irina, stockfish];
-      return new EnginePlayer({ color, game, board, engine });
+      return new RandMinTimeEngine({
+        color,
+        game,
+        board,
+        engine
+      });
     }
   });
 
