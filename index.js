@@ -21,11 +21,12 @@ async function connectDgtBoard() {
 async function createEngine(name, binaryPath) {
   const engine = new Engine(binaryPath);
   engine.name = name;
+  await engine.init();
+
   return engine;
 }
 
 async function initEngine(engine) {
-  await engine.init();
   await engine.ucinewgame();
   await engine.isready();
   return engine;
@@ -58,9 +59,9 @@ async function createKomodoEngine() {
 
 let amyan, stockfish, acqua, komodo, irina;
 
-async function startChess(board) {
+async function startChess(game, board) {
   board = board || (await connectDgtBoard());
-  const game = new ChessGame({ board });
+  game = game || new ChessGame({ board });
   game.newGame(async color => {
     console.log("initializing player", color);
     if (color === "white") {
