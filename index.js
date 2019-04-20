@@ -62,14 +62,19 @@ let amyan, stockfish, acqua, komodo, irina;
 class RandMinTimeEngine extends EnginePlayer {
   constructor(options) {
     super(options);
+    this._allowTakeback = Boolean(options.allowTakeback);
   }
 
   get minTime() {
-    return Math.random() * 7000 + 500 + Math.random() * 3000;
+    return Math.random() * 5000 + 500 + Math.random() * 3000;
+  }
+
+  allowTakeback() {
+    return this._allowTakeback;
   }
 }
 
-async function startChess(game, board) {
+async function startChess(game, board, options) {
   board = board || (await connectDgtBoard());
   game = game || new ChessGame({ board });
   game.newGame(async color => {
@@ -83,12 +88,14 @@ async function startChess(game, board) {
       // komodo = await initEngine(komodo || (await createKomodoEngine()));
       irina = await initEngine(irina || (await createIrinaEngine()));
       const engine = [irina, stockfish];
-      return new RandMinTimeEngine({
-        color,
-        game,
-        board,
-        engine
-      });
+      return new RandMinTimeEngine(
+        Object.assign({}, options, {
+          color,
+          game,
+          board,
+          engine
+        })
+      );
     }
   });
 
