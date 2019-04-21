@@ -89,12 +89,18 @@ async function startChess(game, board, options) {
       irina = await initEngine(irina || (await createIrinaEngine()));
       const engine = [irina, stockfish];
       return new RandMinTimeEngine(
-        Object.assign({}, options, {
-          color,
-          game,
-          board,
-          engine
-        })
+        Object.assign(
+          {
+            allowTakeback: true
+          },
+          options,
+          {
+            color,
+            game,
+            board,
+            engine
+          }
+        )
       );
     }
   });
