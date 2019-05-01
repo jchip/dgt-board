@@ -37,15 +37,15 @@ async function createStockFishEngine() {
 }
 
 async function createAmyanEngine() {
-  return await createEngine("amyan", path.resolve("../Engines/Windows/amyan/amyan.exe"));
+  return await createEngine("amyan", path.resolve("./Engines/Windows/amyan/amyan.exe"));
 }
 
 async function createAcquaEngine() {
-  return await createEngine("acqua", path.resolve("../Engines/Windows/acqua/acqua.exe"));
+  return await createEngine("acqua", path.resolve("./Engines/Windows/acqua/acqua.exe"));
 }
 
 async function createIrinaEngine() {
-  return await createEngine("irina", path.resolve("../Engines/Windows/irina/irina.exe"));
+  return await createEngine("irina", path.resolve("./Engines/Windows/irina/irina.exe"));
 }
 
 // r1b1k2r/ppp3pp/2n5/5p1B/3Pp3/2P5/PP1Q2qP/R3K1NR b KQkq - 1 16
@@ -53,7 +53,7 @@ async function createIrinaEngine() {
 async function createKomodoEngine() {
   return await createEngine(
     "komodo",
-    path.resolve("../Engines/Windows/komodo/komodo-9.02-64bit.exe")
+    path.resolve("./Engines/Windows/komodo/komodo-9.02-64bit.exe")
   );
 }
 
@@ -77,33 +77,37 @@ class RandMinTimeEngine extends EnginePlayer {
 async function startChess(game, board, options) {
   board = board || (await connectDgtBoard());
   game = game || new ChessGame({ board });
-  game.newGame(async color => {
-    console.log("initializing player", color);
-    if (color === "white") {
-      return new UserPlayer({ color, game, board });
-    } else if (color === "black") {
-      // amyan = await initEngine(amyan || (await createAmyanEngine()));
-      // acqua = await initEngine(acqua || (await createAcquaEngine()));
-      stockfish = await initEngine(stockfish || (await createStockFishEngine()));
-      // komodo = await initEngine(komodo || (await createKomodoEngine()));
-      irina = await initEngine(irina || (await createIrinaEngine()));
-      const engine = [irina, stockfish];
-      return new RandMinTimeEngine(
-        Object.assign(
-          {
-            allowTakeback: true
-          },
-          options,
-          {
-            color,
-            game,
-            board,
-            engine
-          }
-        )
-      );
-    }
-  });
+  game.newGame(
+    async color => {
+      console.log("initializing player", color);
+      if (color === "white") {
+        return new UserPlayer({ color, game, board });
+      } else if (color === "black") {
+        amyan = await initEngine(amyan || (await createAmyanEngine()));
+        // acqua = await initEngine(acqua || (await createAcquaEngine()));
+        stockfish = await initEngine(stockfish || (await createStockFishEngine()));
+        komodo = await initEngine(komodo || (await createKomodoEngine()));
+        irina = await initEngine(irina || (await createIrinaEngine()));
+        const engine = [irina, stockfish, komodo, amyan];
+        return new RandMinTimeEngine(
+          Object.assign(
+            {
+              allowTakeback: true
+            },
+            options,
+            {
+              color,
+              game,
+              board,
+              engine
+            }
+          )
+        );
+      }
+    },
+    options.startFen,
+    options.moves
+  );
 
   return game;
 }
