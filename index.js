@@ -81,7 +81,9 @@ async function startChess(game, board, options) {
     async color => {
       console.log("initializing player", color);
       if (color === "white") {
-        return new UserPlayer({ color, game, board });
+        return new UserPlayer(
+          Object.assign({ playerInfo: options.whiteInfo }, { color, game, board })
+        );
       } else if (color === "black") {
         amyan = await initEngine(amyan || (await createAmyanEngine()));
         // acqua = await initEngine(acqua || (await createAcquaEngine()));
@@ -92,7 +94,8 @@ async function startChess(game, board, options) {
         return new RandMinTimeEngine(
           Object.assign(
             {
-              allowTakeback: true
+              allowTakeback: true,
+              playerInfo: options.blackInfo
             },
             options,
             {
