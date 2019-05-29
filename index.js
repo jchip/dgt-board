@@ -78,36 +78,37 @@ async function startChess(game, board, options) {
   board = board || (await connectDgtBoard());
   game = game || new ChessGame({ board });
   game.newGame(
-    async color => {
-      console.log("initializing player", color);
-      if (color === "white") {
-        return new UserPlayer(
-          Object.assign({ playerInfo: options.whiteInfo }, { color, game, board })
-        );
-      } else if (color === "black") {
-        amyan = await initEngine(amyan || (await createAmyanEngine()));
-        // acqua = await initEngine(acqua || (await createAcquaEngine()));
-        stockfish = await initEngine(stockfish || (await createStockFishEngine()));
-        komodo = await initEngine(komodo || (await createKomodoEngine()));
-        irina = await initEngine(irina || (await createIrinaEngine()));
-        const engine = [irina, stockfish, komodo, amyan];
-        return new RandMinTimeEngine(
-          Object.assign(
-            {
-              allowTakeback: true,
-              playerInfo: options.blackInfo
-            },
-            options,
-            {
-              color,
-              game,
-              board,
-              engine
-            }
-          )
-        );
-      }
-    },
+    options.initPlayer ||
+      (async color => {
+        console.log("initializing player", color);
+        if (color === "white") {
+          return new UserPlayer(
+            Object.assign({ playerInfo: options.whiteInfo }, { color, game, board })
+          );
+        } else if (color === "black") {
+          amyan = await initEngine(amyan || (await createAmyanEngine()));
+          // acqua = await initEngine(acqua || (await createAcquaEngine()));
+          stockfish = await initEngine(stockfish || (await createStockFishEngine()));
+          komodo = await initEngine(komodo || (await createKomodoEngine()));
+          irina = await initEngine(irina || (await createIrinaEngine()));
+          const engine = [irina, stockfish, komodo, amyan];
+          return new RandMinTimeEngine(
+            Object.assign(
+              {
+                allowTakeback: true,
+                playerInfo: options.blackInfo
+              },
+              options,
+              {
+                color,
+                game,
+                board,
+                engine
+              }
+            )
+          );
+        }
+      }),
     options.startFen,
     options.moves
   );
