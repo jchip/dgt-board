@@ -7,7 +7,7 @@ const EnginePlayer = require("./lib/engine-player");
 const { Engine } = require("node-uci");
 
 async function connectDgtBoard() {
-  const board = new Board("COM5");
+  const board = new Board("COM3");
   return new Promise(resolve => {
     board.once("ready", () => {
       console.log("board ready - serial no:", board.serialNo, "version:", board.versionNo);

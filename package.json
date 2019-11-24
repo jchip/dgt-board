@@ -24,7 +24,7 @@
     "chess-js": "jchip/chess-js",
     "lodash": "^4.17.11",
     "node-uci": "^1.3.1",
-    "serialport": "^6.2.1"
+    "serialport": "^8.0.0"
   },
   "devDependencies": {
     "standard": "^11.0.1"
