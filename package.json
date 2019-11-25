@@ -19,6 +19,9 @@
     "standard": "standard",
     "test": "npm run standard"
   },
+  "prettier": {
+    "printWidth": 100
+  },
   "dependencies": {
     "chalk": "^2.4.2",
     "chess-js": "jchip/chess-js",
